@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Union Strike Folk Song</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+    <h1 id="title">Union Strike Folk Song</h1>
+
+    <video src="https://www.cs.tufts.edu/comp/120/butwehavethepower.mp4" id="butwehavethepower" controls></video>
+    <div id="lyrics">
+    </div>
+
+    <script type="text/javascript">
+        // Complete this section and create a CSS file named style.css
+        var video = document.getElementById("butwehavethepower");
+        var lyrics = document.getElementById("lyrics");
+        video.addEventListener("timeupdate", function () {
+            if (video.currentTime > 5 && video.currentTime < 15) {
+                lyrics.innerHTML =
+                    "<h3> Lisa: <br> Come gather round, children, <br> It's high time ye learned <br> 'Bout a hero named Homer <br> And a devil named Burns. </h3>";
+
+            }
+            else if (video.currentTime > 17 && video.currentTime < 26) {
+                lyrics.innerHTML =
+                    "<h3>Lisa: <br>We'll march 'till we drop <br> The girls and the fellas. <br> We'll fight 'till the death <br> Or else fold like umbrellas.</h3>"
+            }
+            else if (video.currentTime > 27 && video.currentTime < 35) {
+                lyrics.innerHTML = "<h3> Man attemps to union bust</h3>"
+            }
+            else if (video.currentTime > 37 && video.currentTime < 45) {
+                lyrics.innerHTML =
+                    "<h3>Lisa: <br>So we'll march day and night <br> By the big cooling tower. <br> They have the plant</h3>"
+            }
+            else if (video.currentTime > 46 && video.currentTime < 48) {
+                lyrics.innerHTML = "<h1>Lisa: <br>But we have the power</h1>"
+            }
+            else if (video.currentTime > 51 && video.currentTime < 54) {
+                lyrics.innerHTML = '<h3> Lenny: <br> Now do "Classical Gas!"</h3>'
+            }
+            else if (video.currentTime > 72 && video.currentTime < 92) {
+                lyrics.innerHTML = "<h3>Lisa: <br>So we'll march day and night <br> By the big cooling tower. <br> They have the plant <br> But we have the power</h3>"
+            }
+            else if (video.currentTime > 93){
+                lyrics.innerHTML = "<h3>Bald fellow feels remose?</h3>"
+            }
+        }
+            , false);
+    </script>
+</body>
+
+</html>

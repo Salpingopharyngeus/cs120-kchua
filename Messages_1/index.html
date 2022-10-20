@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Messages</title>
+    <script>
+        function loadMessages() {
+            jsonData = '[{"id":1,"content":"Do you really want to hurt me?","username":"Boy"},{"id":2,"content":"Do you really want to make me cry?","username":"George"}]';
+            // Your code here......
+            messages = JSON.parse(jsonData);
+
+            for (thing in messages) {
+                document.getElementById("messages").innerHTML += messages[thing]["content"] + " " + messages[thing]["username"] + "<br>";
+            }
+
+        }
+    </script>
+</head>
+
+<body onload="loadMessages()">
+    <h1>Messages</h1>
+    <div id="messages"></div>
+</body>
+
+</html>
