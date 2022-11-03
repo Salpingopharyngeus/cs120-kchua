@@ -1,5 +1,5 @@
 Part 2
-I managed to determine and mark the current locatin on the map. 
+I managed to determine and mark the current location on the map, make requests from the API and populate the cars on the map.
 
 
 

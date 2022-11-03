@@ -5,7 +5,7 @@ function initMap() {
     const southstation = { lat: 42.352271, lng: -71.05524200000001 };
     map = new google.maps.Map(document.getElementById("map"), {
         center: southstation,
-        zoom: 14,
+        zoom: 4,
     });
 
     infoWindow = new google.maps.InfoWindow();
@@ -71,7 +71,6 @@ function initMap() {
 
                     // Create markers.
                     for (let i = 0; i < data.length; i++) {
-                        console.log({ lat: data[i].lat, lng: data[i].lng})
                         const marker = new google.maps.Marker({
                             position: { lat: data[i].lat, lng: data[i].lng},
                             icon: "car.png",
