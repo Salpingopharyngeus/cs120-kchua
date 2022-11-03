@@ -72,11 +72,21 @@ function initMap() {
                         const { target } = domEvent;
 
                         infoWindow.close();
-                        infoWindow.setContent("Nearest vehicle is located at lat:" + closestCar.position.lat + " lng: " + closestCar.position.lng + " and is " + closestCar.distance* 0.0006213712 + " miles away");
+                        infoWindow.setContent("Nearest vehicle is located at lat:" + closestCar.position.lat + " lng: " + closestCar.position.lng + " and is " + closestCar.distance * 0.0006213712 + " miles away");
                         infoWindow.open(curLocation.map, curLocation);
                     }
-                    
                     );
+
+                    const travel_line = new google.maps.Polyline({
+
+                        path: [markers[0], closestCar.position],
+                        geodesic: true,
+                        strokeColor: "#FF0000",
+                        strokeOpacity: 2.0,
+                        strokeWeight: 2,
+                    });
+                    travel_line.setMap(map);
+
 
                 }
 

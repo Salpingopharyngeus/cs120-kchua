@@ -1,5 +1,10 @@
 Part 2
-I managed to determine and mark the current location on the map, make requests from the API and populate the cars on the map.
+To my knowledge, everything works.
+No humans were consulted to complete this lab.
+I probably sunk 6 hours into this, an hour of which was spent eventually learning that I needed to add the geometry library to api call.
+
+Personal note: This is the ugliest thing I've ever written, and my code is generally far more elegant that this. 
+
 
 
 
