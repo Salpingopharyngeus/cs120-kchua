@@ -12,14 +12,13 @@ function initMap() {
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                map.setCenter(pos);
-            },
+        navigator.geolocation.getCurrentPosition(function (position) {
+            const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            };
+            map.setCenter(pos);
+        },
             () => {
                 handleLocationError(true, infoWindow, map.getCenter());
             }
@@ -28,7 +27,6 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-
 
 
     const icons = {
@@ -43,14 +41,9 @@ function initMap() {
         },
 
     ];
-    // Create markers.
-    for (let i = 0; i < features.length; i++) {
-        const marker = new google.maps.Marker({
-            position: features[i].position,
-            icon: icons[features[i].type].icon,
-            map: map,
-        });
-    }
+
+
+
     // Adds current location marker
     navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -63,10 +56,33 @@ function initMap() {
                 map: map,
             })
 
-            XMLHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            const cars = XMLHttpRequest.send(
-                "username=p5fjWJty&lat=" + position.coords.latitude + "&lng" + position.coords.longitude);
-            console.log(cars);
+
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", 'https://jordan-marsh.herokuapp.com/rides', true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("username=p5fjWJty&lat=" + position.coords.latitude + "&lng=" + position.coords.longitude);
+
+            xhr.onload = () => {
+
+                if (xhr.status == 200 && xhr.readyState == xhr.DONE) {
+                    const data = JSON.parse(xhr.responseText);
+
+
+                    // Create markers.
+                    for (let i = 0; i < data.length; i++) {
+                        console.log({ lat: data[i].lat, lng: data[i].lng})
+                        const marker = new google.maps.Marker({
+                            position: { lat: data[i].lat, lng: data[i].lng},
+                            icon: "car.png",
+                            map: map,
+                        });
+                    }
+                }
+            }
+
+
+
         },
     );
 
