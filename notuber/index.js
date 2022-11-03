@@ -1,55 +1,55 @@
-let map;
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see the error "The Geolocation service
+// failed.", it means you probably did not give permission for the browser to
+// locate you.
+let map, infoWindow;
 
-// Initialize and add the map
 function initMap() {
-    // The location of Uluru
-    const southstation = { lat: 42.352271, lng: -71.05524200000001 };
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 6,
+  });
+  infoWindow = new google.maps.InfoWindow();
 
-    // The map, centered at Southstation
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 14,
-        center: southstation,
-    });
+  const locationButton = document.createElement("button");
 
-    const icons = {
-        car: {
-            icon: "car.png",
+  locationButton.textContent = "Pan to Current Location";
+  locationButton.classList.add("custom-map-control-button");
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+  locationButton.addEventListener("click", () => {
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent("Location found.");
+          infoWindow.open(map);
+          map.setCenter(pos);
+        },
+        () => {
+          handleLocationError(true, infoWindow, map.getCenter());
         }
-    };
-    const features = [
-        {
-            position: new google.maps.LatLng(42.3453, - 71.0464),
-            type: "car",
-        },
-        {
-            position: new google.maps.LatLng(42.3662, - 71.0621),
-            type: "car",
-        },
-        {
-            position: new google.maps.LatLng(42.3603, - 71.0547),
-            type: "car",
-        },
-        {
-            position: new google.maps.LatLng(42.3472, - 71.0802),
-            type: "car",
-        },
-        {
-            position: new google.maps.LatLng(42.3663, - 71.0544),
-            type: "car",
-        },
-        {
-            position: new google.maps.LatLng(42.3542, - 71.0704),
-            type: "car",
-        }
-    ];
-    // Create markers.
-    for (let i = 0; i < features.length; i++) {
-        const marker = new google.maps.Marker({
-            position: features[i].position,
-            icon: icons[features[i].type].icon,
-            map: map,
-        });
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
     }
+  });
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation."
+  );
+  infoWindow.open(map);
 }
 
 window.initMap = initMap;
