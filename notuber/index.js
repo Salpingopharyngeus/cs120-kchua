@@ -28,21 +28,7 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-
-    const icons = {
-        car: {
-            icon: "car.png",
-        }
-    };
-    const features = [
-        {
-            position: new google.maps.LatLng(42.3453, - 71.0464),
-            type: "car",
-        },
-
-    ];
-
-
+    var markers = [];
 
     // Adds current location marker
     navigator.geolocation.getCurrentPosition(
@@ -55,6 +41,7 @@ function initMap() {
                 position: pos,
                 map: map,
             })
+            markers.push(pos);
 
 
 
@@ -72,20 +59,31 @@ function initMap() {
                     // Create markers.
                     for (let i = 0; i < data.length; i++) {
                         const marker = new google.maps.Marker({
-                            position: { lat: data[i].lat, lng: data[i].lng},
+                            position: { lat: data[i].lat, lng: data[i].lng },
                             icon: "car.png",
                             map: map,
                         });
+                        markers.push({ lat: data[i].lat, lng: data[i].lng });
                     }
+
+                    const closestCar = findClosestCar(markers);
+
+                    curLocation.addListener("click", ({ domEvent, latLng }) => {
+                        const { target } = domEvent;
+
+                        infoWindow.close();
+                        infoWindow.setContent("Nearest vehicle is located at lat:" + closestCar.position.lat + " lng: " + closestCar.position.lng + " and is " + closestCar.distance* 0.0006213712 + " miles away");
+                        infoWindow.open(curLocation.map, curLocation);
+                    }
+                    
+                    );
+
                 }
+
             }
-
-
 
         },
     );
-
-
 };
 
 // Error Handling
@@ -97,6 +95,21 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
             : "Error: Your browser doesn't support geolocation."
     );
     infoWindow.open(map);
+}
+
+
+// Computes the distance of each of the markers, and returns the position of the nearest car.
+function findClosestCar(markers) {
+    // current location is at the 0 index.
+    var closestCar = null;
+    for (var j = 1; j < markers.length; j++) {
+        var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(markers[0].lat, markers[0].lng), new google.maps.LatLng(markers[j].lat, markers[j].lng));
+        if (closestCar == null || closestCar.distance > distance) {
+            closestCar = { position: markers[j], distance: distance }
+        }
+
+    }
+    return closestCar;
 }
 
 window.initMap = initMap;
