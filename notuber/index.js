@@ -58,21 +58,21 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
             };
-            const marker = new google.maps.Marker({
+            const curLocation = new google.maps.Marker({
                 position: pos,
                 map: map,
             })
+
+            XMLHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            const cars = XMLHttpRequest.send(
+                "username=p5fjWJty&lat=" + position.coords.latitude + "&lng" + position.coords.longitude);
+            console.log(cars);
         },
-        () => {
-            handleLocationError(true, infoWindow, map.getCenter());
-        }
     );
 
 
-
-
-
 };
+
 // Error Handling
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
