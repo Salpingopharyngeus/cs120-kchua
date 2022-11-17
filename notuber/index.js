@@ -46,7 +46,7 @@ function initMap() {
 
 
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", 'https://jordan-marsh.herokuapp.com/rides', true);
+            xhr.open("POST", 'https://afternoon-dawn-73279.herokuapp.com/rides', true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send("username=p5fjWJty&lat=" + position.coords.latitude + "&lng=" + position.coords.longitude);
 
