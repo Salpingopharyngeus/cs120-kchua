@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Sub Bum: available requests</title>
+    <link rel="stylesheet" href="./styles.css">
+    <!-- Allows use of different css based on screen size -->
+    <link rel="stylesheet" media="screen and (max-device-width: 800px)" href="mobile_styles.css" />
+    <!-- Gets available requests -->
+    <script>
+        function loadMessages() {
+            jsonData = '[{"id":1,"content":"Hot Yoga","username":"Tina"},{"id":2,"content":"RocK Climbing","username":"George"}]';
+            // Your code here......
+            const obj = JSON.parse(jsonData);
+            for (i = 0; i < obj.length; i++) {
+
+
+                var div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.justifyContent = 'center';
+
+                // creates buttons 
+                var button = document.createElement("button");
+                //button.innerHTML = obj[i].username + "<br />" + (obj[i].activity);
+                button.className = "button";
+
+                var content = '<ul> \
+                                <h3>' + obj[i].username + " (time) </h3> \
+                                    <h2>" + obj[i].content + "</h2> \
+                                    <p> description </p> \
+                                </ul>"
+                button.innerHTML = content;
+                // pass data as a jquery for the request to autopopulate
+                button.onclick = '<action="request.html?username="' + obj[i].username + '&content=' + obj[i].content + 'buttton>';
+
+                document.getElementById("requests").appendChild(button);
+            }
+        }
+        // Only pass data on click to reduce data stored?
+        function passActivtyToRequest(data) {
+            window.open(request.html);
+        }
+    </script>
+</head>
+
+
+
+<body onload="loadMessages()">
+    <!-- Clicking this brings us back to home -->
+    <h1 id="title"><a href="./home.html">Sub Bum</a></h1>
+
+    <h2 id="page-title">Available Activites</h2>
+
+    <!-- Needs to then fetch list of available activites
+        and have an event handler so if the event is clicked, it will take you to details -->
+    <div id="requests"></div>
+</body>
