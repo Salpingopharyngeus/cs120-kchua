@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>Security Assesment</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <h3>1. Introduction</h3>
+    <p>Product is the backened server of a ride-hailing service. In it's present condition, it allows end-users to
+        provide requests for cars, get their requests, update their requests and access the data of all users. We were
+        hired to prepare a report listing it's vulnerabilities</p>
+    <h3>2. Methodology</h3>
+    <p>Readiliy available tools such as the Burp Suite and it's open source variant OWASP ZAP! were utilized to find
+        and test for vulnerabilities</p>
+    <h3>3. Findings Summary</h3>
+    <p>There are a bunch of issues that should be resolved before this project is ever exposed to the public. The
+        biggest issue (in multiple variations) is that user data isn't secured, or protected, meaning anyone (with or
+        without) an account can not only access data that is not theirs, but also modify the data of others without
+        their consent or knowledge. A more detailed report has been provided below notating my recommendations.</p>
+    <h3>4. Findings</h3>
+    <h4>Sql Injection (get methods lines 66 & 81)</h4>
+    <p> While there is protection (through place hodlers) against sql injection in calls made by post requests, there
+        are no protections against sql injection in the get requests, meaning that a rouge user could provide a true
+        statement as part of the request when requesting the passenger or vehicle requests, and return all the passenger
+        or vehicle data. </p>
+    <h5>Solution:</h5>
+    <p>Anytime data entry and code are mixed, place holders should be used so that rogue sql queries in
+        the form of potentially valid text entry can be used to improperly access user data. Consider using some sort of
+        validation on the data entry as well, before it even makes it into the database.</p>
+    <h4>Protect User Identity / Update Permission (line 41)</h4>
+    <p>There is no protection against the users. Anyone can submit update data, and they can utilize the update function
+        to not only update their information, but the information of
+        everyone else. In the case of a ride-sharing app, a user could potentially change the destinations of ride
+        requests if they knew the username of a targeted end user. </p>
+    <h5>Solution:</h5>
+    <p></p>There needs to be some way to safely authenticate the identity of the users. If a cooke is used,
+    make sure to safeguard the cookie against cross site scripting.
+    </p>
+    <h4>Get All Data Exposed (line 96)</h4>
+    <p>There is a huge privacy issue, in the get statement as anyone can request to see all the ride data (get request
+        at line 96) and get an itemized list of users, their near (currently whereabouts) and when they made the
+        request. </p>
+    <h5>Solution:</h5>
+    <p>While this is great for debugging/development to check work, this needs to be removed before it is
+        allowed into prodction code</p>
+    <h3>5. Conclusions</h3>
+    <p>This project shows great promise, but needs some additional work to get it to secure that data that has already
+        been collected, and safeguard against future malicous agents. Consider implimenting the aforemntioned solutions
+        to mediate some of the more obvious and fatal flaws.</p>
+</body>
+
+</html>
